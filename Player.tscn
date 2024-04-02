@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://sj7v14rqqf6o"]
+
+[ext_resource type="Script" path="res://scripts/player/Player.cs" id="1_fdx3a"]
+[ext_resource type="Script" path="res://shapes/Circle.cs" id="1_vq36n"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_pm102"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dyxo1"]
+radius = 7.0
+
+[node name="RigidBody2D" type="RigidBody2D"]
+material = SubResource("CanvasItemMaterial_pm102")
+position = Vector2(259, 219)
+gravity_scale = 2.0
+script = ExtResource("1_fdx3a")
+
+[node name="Circle" type="Node2D" parent="."]
+script = ExtResource("1_vq36n")
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_dyxo1")
