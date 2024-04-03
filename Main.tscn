@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://cvknm0p0gp1tk"]
 
 [ext_resource type="PackedScene" uid="uid://sj7v14rqqf6o" path="res://Player.tscn" id="1_31u8x"]
-[ext_resource type="PackedScene" uid="uid://b63w5j8662p7g" path="res://Mobs.tscn" id="2_6pd7a"]
+[ext_resource type="Script" path="res://scripts/game/Main.cs" id="1_vvnok"]
 
 [sub_resource type="Curve2D" id="Curve2D_xwpgd"]
 _data = {
@@ -13,8 +13,10 @@ point_count = 5
 size = Vector2(50.3731, 5.37956)
 
 [node name="Main" type="Node"]
+script = ExtResource("1_vvnok")
 
 [node name="ColorRect" type="ColorRect" parent="."]
+visible = false
 visibility_layer = 513
 offset_left = 2.0
 offset_top = 1.0
@@ -30,11 +32,8 @@ position = Vector2(569, 286)
 input_pickable = true
 gravity_scale = 1.0
 
-[node name="Mob" parent="." instance=ExtResource("2_6pd7a")]
-position = Vector2(92, 292)
-mass = 2.07
-
 [node name="Path2D" type="Path2D" parent="."]
+visible = false
 position = Vector2(-101.567, 9.8628)
 scale = Vector2(1.14446, 0.984756)
 curve = SubResource("Curve2D_xwpgd")
