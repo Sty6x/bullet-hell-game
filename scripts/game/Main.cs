@@ -6,44 +6,47 @@ public partial class Main : Node
 {
 	// Called when the node enters the scene tree for the first time.
 	private PackedScene MobsScene;
-	private readonly List<Mobs> leftMobsArray = new();
-	private readonly List<Mobs> rightMobsArray = new();
+	private readonly List<Mobs> mobsArray = new();
 	private int _mobsLimit = 20;
 	private float _mobsSpeed = 1000.0f;
 	public override void _Ready()
 	{
+		GD.Print(GetViewport().GetVisibleRect().Size.X);
 		MobsScene = (PackedScene)ResourceLoader.Load("res://Mobs.tscn");
+		float viewportWidth = GetViewport().GetVisibleRect().Size.X;
 		for(var i = 0; i < _mobsLimit ; i++){
-			Vector2 startingPosition = new (i * GD.Randf() * -200.0f,i * GD.Randf() * 100.0f);
-			LoadMobs(startingPosition,leftMobsArray);
 			if(i > 10) {
-				Vector2 oppositePosition = new (1000.0f,i * 50.0f);
-				LoadMobs(oppositePosition,rightMobsArray);
+				Vector2 oppositePosition = new (GD.Randf() * viewportWidth,i * 50.0f);
+				LoadMobs(oppositePosition);
+				continue;	
 			};
+			Vector2 startingPosition = new (i * GD.Randf() * -200.0f,i * GD.Randf() * 100.0f);
+			LoadMobs(startingPosition);
 		}
-
 	}
-	private Mobs LoadMobs(Vector2 startingPosition,List<Mobs> container){
+	private Mobs LoadMobs(Vector2 startingPosition){
 		Mobs Mob = MobsScene.Instantiate<Mobs>();
 		Mob.SetPosition(startingPosition);
 		AddChild(Mob);
-		container.Add(Mob);
+		mobsArray.Add(Mob);
 		return Mob;
 	}
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		foreach (var mob in leftMobsArray)
-		{
-			mob.Move(new Vector2(_mobsSpeed,0));
-		}
-
-		foreach (var mob in rightMobsArray)
-		{
-				mob.Move(new Vector2(-1000.0f,0));
-		};
-
+		MoveMobs();
 	}
 
-
+	private void MoveMobs(){
+		var first = 0;
+		var end = mobsArray.Count -1;
+		var middle = (first + end) / 2;
+		for(var i = 0; i < end; i++){
+			if(i > middle){
+				mobsArray[i].Move(new Vector2(-_mobsSpeed,0));
+				continue;
+			}
+			mobsArray[i].Move(new Vector2(_mobsSpeed,0));
+		}
+	}
 }
