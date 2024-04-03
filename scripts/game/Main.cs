@@ -14,9 +14,12 @@ public partial class Main : Node
 		GD.Print(GetViewport().GetVisibleRect().Size.X);
 		MobsScene = (PackedScene)ResourceLoader.Load("res://Mobs.tscn");
 		float viewportWidth = GetViewport().GetVisibleRect().Size.X;
+		float min = viewportWidth;
+		float max = viewportWidth+300;
 		for(var i = 0; i < _mobsLimit ; i++){
 			if(i > 10) {
-				Vector2 oppositePosition = new (GD.Randf() * viewportWidth,i * 50.0f);
+				// random from viewportwidth to 200;
+				Vector2 oppositePosition = new (GD.Randf() *(min-max) + viewportWidth,i * 50.0f);
 				LoadMobs(oppositePosition);
 				continue;	
 			};
