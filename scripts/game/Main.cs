@@ -34,22 +34,38 @@ public partial class Main : Node
 		mobsArray.Add(Mob);
 		return Mob;
 	}
+	private void MoveMobs(){
+		for(var i = 0; i < mobsArray.Count ; i++){
+			Mobs mob = mobsArray[i];
+			if(i > mobsArray.Count/2){
+				mob.Move(new Vector2(-_mobsSpeed,0));
+				continue;
+			}
+			mob.Move(new Vector2(_mobsSpeed,0));
+		}
+	}
+	private void ResetMobPosition(){
+		float viewportWidth = GetViewport().GetVisibleRect().Size.X;
+		for(var i = 0; i < mobsArray.Count; i++){
+			Mobs mob = mobsArray[i];
+			if(i > mobsArray.Count/2){
+				if(mob.Position.X < -100.0f){
+					mob.SetPosition(new Vector2(i * GD.Randf() * -200.0f,i * GD.Randf() * 100.0f));
+				}
+				continue;
+			}
+			if(mob.Position.X > viewportWidth){
+				Vector2 startingPosition = new (i * GD.Randf() * -200.0f,i * GD.Randf() * 100.0f);
+				mob.SetPosition(startingPosition);
+			}
+		}
+	}
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
 		MoveMobs();
+		ResetMobPosition();
 	}
 
-	private void MoveMobs(){
-		var first = 0;
-		var end = mobsArray.Count -1;
-		var middle = (first + end) / 2;
-		for(var i = 0; i < end; i++){
-			if(i > middle){
-				mobsArray[i].Move(new Vector2(-_mobsSpeed,0));
-				continue;
-			}
-			mobsArray[i].Move(new Vector2(_mobsSpeed,0));
-		}
-	}
+	
 }
