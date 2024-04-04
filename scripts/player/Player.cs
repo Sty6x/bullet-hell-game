@@ -37,15 +37,13 @@ public partial class Player : RigidBody2D
 			Vector2 force = new( 0,-Mass * _jumpAcceleration); // to initiate jump
 			float endVelocity = startingVelocity + _jumpAcceleration * (float)GetProcessDeltaTime();
 			var currentAcceleration = Mathf.Abs(endVelocity-startingVelocity)/(float)GetProcessDeltaTime();
-			if(currentAcceleration > _jumpAcceleration){
-				GD.Print("Exceeded");
-				var deceleration = (endVelocity - startingVelocity) / (float)GetProcessDeltaTime() ;
-				Vector2 newCalculatedForce = new(0, Mass * -deceleration);
-				ApplyForce(newCalculatedForce);
-			}else{
+			if(currentAcceleration < _jumpAcceleration){
 				ApplyForce(force);
+				return;
 			}
-			GD.Print(Mathf.Abs(force.Y));
+			var deceleration = (endVelocity - startingVelocity) / (float)GetProcessDeltaTime() ;
+			Vector2 newCalculatedForce = new(0, Mass * -deceleration);
+			ApplyForce(newCalculatedForce);
     	}
     }
 
