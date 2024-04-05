@@ -40,12 +40,24 @@ public partial class Main : Node
 	private void MoveMobs(){
 		for(var i = 0; i < mobsArray.Count ; i++){
 			Mobs mob = mobsArray[i];
-			OutOfBoundsSignal.Publish();
 			if(i > mobsArray.Count/2){
 				mob.Move(new Vector2(-_mobsSpeed,0));
+				CheckMobPositions(mob);
 				continue;
 			}
 			mob.Move(new Vector2(_mobsSpeed,0));
+			CheckMobPositions(mob);
+		}
+	}
+
+	private void CheckMobPositions(Mobs mob){
+		float viewportWidth = GetViewport().GetVisibleRect().Size.X;
+			if(mob.Position.X < -100.0f){
+				OutOfBoundsSignal.Publish(mob,"left");
+				return;
+			}
+			if(mob.Position.X > viewportWidth + 200){
+				OutOfBoundsSignal.Publish(mob,"right");
 		}
 	}
 
@@ -53,23 +65,8 @@ public partial class Main : Node
 		float viewportWidth = GetViewport().GetVisibleRect().Size.X;
 		float min = viewportWidth;
 		float max = viewportWidth+300;
-		GD.Print(mobsArray[0].Position.X);
-		for(var i = 0; i < mobsArray.Count; i++){
-			Mobs mob = mobsArray[i];
-			if(i > mobsArray.Count/2){
-				if(mob.Position.X < -100.0f){
-					Vector2 OppositePosition = new(GD.Randf() *(min-max) + viewportWidth ,i * 50.0f);
-					mob.SetPosition(OppositePosition);
-					continue;
-				}
-			}
-			if(mob.Position.X > viewportWidth){
-				Vector2 startingPosition = new(i * GD.Randf() * 200.0f ,i * GD.Randf() * 100.0f);
-				mob.SetPosition(startingPosition);
-			}
-		}
 	}
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
+
 	public override void _Process(double delta)
 	{
 		MoveMobs();
@@ -88,16 +85,12 @@ class Observer {
 	public void Subscribe(String eventType ,Mobs mob){
 		_subscribers.Add(mob);
 	}
-	public void Publish(){
-		for(var i = 0; i < _subscribers.Count; i++){
-			Mobs mob = _subscribers[i];
-			if(mob.Position.X < -100.0f){
-			GD.Print("Mob");
-			GD.Print(mob);
-			GD.Print("Out of Bounds");
-				continue;
-			}
+	public void Publish(Mobs mob, String rectDirection ){
+		if(rectDirection != "left"){
+			GD.Print("Outbounds right");
+			return;
 		}
+		GD.Print("Outbounds right");
 	}
 }
 
