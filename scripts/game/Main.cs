@@ -8,8 +8,11 @@ public partial class Main : Node
 	// Called when the node enters the scene tree for the first time.
 	private PackedScene MobsScene;
 	private readonly List<Mobs> mobsArray = new();
-	private int _mobsLimit = 20;
+	private int _mobsLimit = 4;
 	private float _mobsSpeed = 1000.0f;
+	private Dictionary<int, Mobs> mobsReset = new();
+
+
 	public override void _Ready()
 	{
 		GD.Print(GetViewport().GetVisibleRect().Size.X);
@@ -21,7 +24,6 @@ public partial class Main : Node
 		for(var i = 0; i < _mobsLimit ; i++){
 			if(i > 10) {
 				Vector2 oppositePosition = new (viewportWidth - 300, GD.Randf() * viewportHeight - 300);
-				// random from viewportwidth to 200;
 				LoadMobs(oppositePosition);
 				continue;	
 			};
@@ -43,7 +45,7 @@ public partial class Main : Node
 				mob.Move(new Vector2(-_mobsSpeed,0));
 				CheckMobPositions(mob);
 				continue;
-			}
+			}  
 			mob.Move(new Vector2(_mobsSpeed,0));
 			CheckMobPositions(mob);
 		}
@@ -59,15 +61,21 @@ public partial class Main : Node
 		Vector2 oppositePosition = new (viewportWidth - 300, GD.Randf() * viewportHeight - 300);
 		Vector2 startingPosition = new (200, GD.Randf() * viewportHeight - 300);
 
-		if(mob.Position.X < 0){
-			ResetMobPosition(mob,oppositePosition);
-			return;
-		};
-		if(mob.Position.X > viewportWidth ){
-			ResetMobPosition(mob,startingPosition);
-			return;
-		};
+        if(mob.Position.X < 0){
+			if(!mobsReset.ContainsKey(mob.GetIndex())){
+				mobsReset.Add(mob.GetIndex(),mob);
+            	ResetMobPosition(mob, oppositePosition);
+			}
+            return;
+        } else if(mob.Position.X > viewportWidth ){
+			if(!mobsReset.ContainsKey(mob.GetIndex())){
+				mobsReset.Add(mob.GetIndex(),mob);
+            	ResetMobPosition(mob, startingPosition);
+			}
+            return;
+    	}
 	}
+	// keep track of each mob and set if they are out of bounds in their property 
 
 	public void ResetMobPosition(Mobs mob, Vector2 newDirection ){
 		Mobs outBoundsMob = mobsArray.Find(subMob=> subMob.GetIndex() == mob.GetIndex());
