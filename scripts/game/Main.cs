@@ -52,12 +52,10 @@ public partial class Main : Node
 
 	private void CheckMobPositions(Mobs mob){
 		float viewportWidth = GetViewport().GetVisibleRect().Size.X;
-			if(mob.Position.X < -100.0f){
-				OutOfBoundsSignal.Publish(mob,"left");
-				return;
-			}
-			if(mob.Position.X > viewportWidth + 200){
-				OutOfBoundsSignal.Publish(mob,"right");
+		if(mob.Position.X < -100.0f){
+			OutOfBoundsSignal.Publish(mob,"left");
+		}else if(mob.Position.X > viewportWidth + 200){
+			OutOfBoundsSignal.Publish(mob,"right");
 		}
 	}
 
@@ -90,7 +88,7 @@ class Observer {
 			GD.Print("Outbounds right");
 			return;
 		}
-		GD.Print("Outbounds right");
+		GD.Print("Outbounds left");
 	}
 }
 
