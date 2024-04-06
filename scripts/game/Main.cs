@@ -10,12 +10,16 @@ public partial class Main : Node
 	private readonly List<Mobs> mobsArray = new();
 	private int _mobsLimit = 10;
 	private float _mobsSpeed = 1000.0f;
+	private Player player;
 
 
 	public override void _Ready()
 	{
-		GD.Print(GetViewport().GetVisibleRect().Size.X);
+		player = GetNode<Player>("./Player");
 		MobsScene = (PackedScene)ResourceLoader.Load("res://Mobs.tscn");
+		// CreateMobs();
+	}
+	private void CreateMobs(){
 		float viewportWidth = GetViewport().GetVisibleRect().Size.X;
 		float viewportHeight = GetViewport().GetVisibleRect().Size.Y;
 		float min = viewportWidth;
@@ -72,6 +76,21 @@ public partial class Main : Node
 	public override void _Process(double delta)
 	{
 		MoveMobs();
+		CheckPlayerOutOfBounds();
+	}
+
+	private void CheckPlayerOutOfBounds(){
+		float viewportWidth = GetViewport().GetVisibleRect().Size.X;
+		float viewportHeight = GetViewport().GetVisibleRect().Size.Y;
+        if(player.GlobalPosition.X < 0){
+			GD.Print("left");
+        } else if(player.GlobalPosition.X > viewportWidth ){
+			GD.Print("right");
+        } else if(player.GlobalPosition.Y < 0 ){
+			GD.Print("top");
+    	} else if(player.GlobalPosition.Y > viewportHeight ){
+			GD.Print("bottom");
+    	}
 	}
 
 }

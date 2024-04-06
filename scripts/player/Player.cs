@@ -2,14 +2,11 @@ using Godot;
 
 public partial class Player : RigidBody2D 
 {
-		private float _force = 1000.0f;
-		float _gravity = 1.0f;
-		private float _accelerationX = 1000.0f;
-		private float  _jumpAcceleration = 20000.0f;
-
-	public override void _Ready()
-	{
-	}
+	private float _force = 1000.0f;
+	float _gravity = 1.0f;
+	private float _accelerationX = 1000.0f;
+	private float  _jumpAcceleration = 20000.0f;
+	public bool isOutOfBounds = false;
 
 	private static Vector2 CalculateNewForce(float x, float y ){
 		Vector2 force = new(x,y);
@@ -26,10 +23,6 @@ public partial class Player : RigidBody2D
     	}
     }
 
-    public override void _Process(double delta)
-	{
-		HandleInputs();
-	}
     public override void _IntegrateForces(PhysicsDirectBodyState2D state)
     {
     	if(Input.IsActionJustPressed("jump")){
@@ -46,5 +39,9 @@ public partial class Player : RigidBody2D
 			ApplyForce(newCalculatedForce);
     	}
     }
-
+    public override void _Process(double delta)
+	{
+		HandleInputs();
+	}
+	// to handle what happens if out of bounds
 }
