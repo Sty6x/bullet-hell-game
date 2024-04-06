@@ -8,9 +8,8 @@ public partial class Main : Node
 	// Called when the node enters the scene tree for the first time.
 	private PackedScene MobsScene;
 	private readonly List<Mobs> mobsArray = new();
-	private int _mobsLimit = 4;
+	private int _mobsLimit = 10;
 	private float _mobsSpeed = 1000.0f;
-	private Dictionary<int, Mobs> mobsReset = new();
 
 
 	public override void _Ready()
@@ -41,13 +40,12 @@ public partial class Main : Node
 	private void MoveMobs(){
 		for(var i = 0; i < mobsArray.Count ; i++){
 			Mobs mob = mobsArray[i];
+			CheckMobPositions(mob);
 			if(i > mobsArray.Count/2){
 				mob.Move(new Vector2(-_mobsSpeed,0));
-				CheckMobPositions(mob);
 				continue;
 			}  
 			mob.Move(new Vector2(_mobsSpeed,0));
-			CheckMobPositions(mob);
 		}
 	}
 
@@ -56,30 +54,19 @@ public partial class Main : Node
 		float viewportHeight = GetViewport().GetVisibleRect().Size.Y;
 		float min = viewportWidth;
 		float max = viewportWidth+300;
-		// Vector2 oppositePosition = new (GD.Randf() *(min-max) + viewportWidth, GD.Randf() * viewportHeight);
-		// Vector2 startingPosition = new (GD.Randf() * -200.0f, GD.Randf() * viewportHeight);
 		Vector2 oppositePosition = new (viewportWidth - 300, GD.Randf() * viewportHeight - 300);
 		Vector2 startingPosition = new (200, GD.Randf() * viewportHeight - 300);
 
-        if(mob.Position.X < 0){
-			if(!mobsReset.ContainsKey(mob.GetIndex())){
-				mobsReset.Add(mob.GetIndex(),mob);
-            	ResetMobPosition(mob, oppositePosition);
-			}
-            return;
-        } else if(mob.Position.X > viewportWidth ){
-			if(!mobsReset.ContainsKey(mob.GetIndex())){
-				mobsReset.Add(mob.GetIndex(),mob);
-            	ResetMobPosition(mob, startingPosition);
-			}
-            return;
+        if(mob.GlobalPosition.X < 0){
+    		ResetMobPosition(mob, oppositePosition);
+        } else if(mob.GlobalPosition.X > viewportWidth ){
+    		ResetMobPosition(mob, startingPosition);
     	}
 	}
-	// keep track of each mob and set if they are out of bounds in their property 
 
-	public void ResetMobPosition(Mobs mob, Vector2 newDirection ){
+	public void ResetMobPosition(Mobs mob, Vector2 newPosition ){
 		Mobs outBoundsMob = mobsArray.Find(subMob=> subMob.GetIndex() == mob.GetIndex());
-		outBoundsMob.Position = newDirection;
+		outBoundsMob.SetPosition(newPosition);
 	}
 
 	public override void _Process(double delta)
