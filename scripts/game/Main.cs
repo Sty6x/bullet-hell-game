@@ -16,7 +16,7 @@ public partial class Main : Node
 	{
 		player = GetNode<Player>("./Player");
 		MobsScene = (PackedScene)ResourceLoader.Load("res://Mobs.tscn");
-		// CreateMobs();
+		CreateMobs();
 	}
 	private void CreateMobs(){
 		float viewportWidth = GetViewport().GetVisibleRect().Size.X;

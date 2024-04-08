@@ -1,13 +1,13 @@
 [gd_scene load_steps=8 format=3 uid="uid://sj7v14rqqf6o"]
 
 [ext_resource type="Script" path="res://scripts/player/Player.cs" id="1_fdx3a"]
-[ext_resource type="Script" path="res://shapes/Circle.cs" id="1_vq36n"]
+[ext_resource type="Script" path="res://scripts/shapes/Circle.cs" id="2_0nw41"]
 [ext_resource type="Script" path="res://scripts/particles/OutOfBoundsParticles.cs" id="3_gret3"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_pm102"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dyxo1"]
-radius = 17.088
+radius = 9.05539
 
 [sub_resource type="Curve" id="Curve_1vr7t"]
 _data = [Vector2(0.0223464, 1), 0.0, 0.112693, 0, 0, Vector2(0.472067, 0.413302), -2.92158, -2.92158, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -26,7 +26,7 @@ script = ExtResource("1_fdx3a")
 
 [node name="Circle" type="Node2D" parent="."]
 z_index = 1
-script = ExtResource("1_vq36n")
+script = ExtResource("2_0nw41")
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -40,7 +40,7 @@ one_shot = true
 speed_scale = 1.33
 explosiveness = 1.0
 direction = Vector2(0, -1)
-spread = 38.18
+spread = 65.68
 gravity = Vector2(0, 0)
 initial_velocity_max = 821.76
 scale_amount_max = 10.0

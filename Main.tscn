@@ -7,7 +7,6 @@
 script = ExtResource("1_vvnok")
 
 [node name="ColorRect" type="ColorRect" parent="."]
-visible = false
 visibility_layer = 513
 offset_left = 2.0
 offset_top = 1.0
