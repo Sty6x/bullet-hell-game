@@ -12,7 +12,6 @@ public partial class Main : Node
 	private float _mobsSpeed = 1000.0f;
 	private Player player;
 
-
 	public override void _Ready()
 	{
 		player = GetNode<Player>("./Player");
@@ -61,11 +60,11 @@ public partial class Main : Node
 		Vector2 oppositePosition = new (viewportWidth - 300, GD.Randf() * viewportHeight - 300);
 		Vector2 startingPosition = new (200, GD.Randf() * viewportHeight - 300);
 
-        if(mob.GlobalPosition.X < 0){
-    		ResetMobPosition(mob, oppositePosition);
-        } else if(mob.GlobalPosition.X > viewportWidth ){
-    		ResetMobPosition(mob, startingPosition);
-    	}
+		if(mob.GlobalPosition.X < 0){
+			ResetMobPosition(mob, oppositePosition);
+		} else if(mob.GlobalPosition.X > viewportWidth ){
+			ResetMobPosition(mob, startingPosition);
+		}
 	}
 
 	public void ResetMobPosition(Mobs mob, Vector2 newPosition ){

@@ -12,16 +12,16 @@ public partial class Player : RigidBody2D
 		Vector2 force = new(x,y);
 		return force;
 	}
-    private void HandleInputs()
-    {
-    	if(Input.IsActionPressed("left")){
+	private void HandleInputs()
+	{
+		if(Input.IsActionPressed("left")){
 			ApplyForce(CalculateNewForce(-Mass * _accelerationX,0));
-    	}
+		}
 
-    	if(Input.IsActionPressed("right")){
+		if(Input.IsActionPressed("right")){
 			ApplyForce(CalculateNewForce(Mass * _accelerationX,0));
-    	}
-    }
+		}
+	}
 
     public override void _IntegrateForces(PhysicsDirectBodyState2D state)
     {
