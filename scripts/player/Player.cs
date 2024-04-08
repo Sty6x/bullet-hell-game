@@ -57,15 +57,8 @@ public partial class Player : RigidBody2D
 	private void CheckPlayerOutOfBounds(){
 		float viewportWidth = GetViewport().GetVisibleRect().Size.X;
 		float viewportHeight = GetViewport().GetVisibleRect().Size.Y;
-		outOfBoundsParticles.ApplyParticles(this);
-        if(GlobalPosition.X < 0){
-			GD.Print("left");
-        } else if(GlobalPosition.X > viewportWidth ){
-			GD.Print("right");
-        } else if(GlobalPosition.Y < 0 ){
-			GD.Print("top");
-    	} else if(GlobalPosition.Y > viewportHeight ){
-			GD.Print("bottom");
+        if(GlobalPosition.X < 0 || GlobalPosition.X > viewportWidth || GlobalPosition.Y < 0  || GlobalPosition.Y > viewportHeight ){
+			outOfBoundsParticles.ApplyParticles<RigidBody2D>(this);
     	}
 	}
 }
