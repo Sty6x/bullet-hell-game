@@ -11,10 +11,9 @@ public partial class Main : Node
 	private int _mobsLimit = 10;
 	private float _mobsSpeed = 1000.0f;
 
-
 	public override void _Ready()
 	{
-		GD.Print(GetViewport().GetVisibleRect().Size.X);
+		GD.Print("L ");
 		MobsScene = (PackedScene)ResourceLoader.Load("res://Mobs.tscn");
 		float viewportWidth = GetViewport().GetVisibleRect().Size.X;
 		float viewportHeight = GetViewport().GetVisibleRect().Size.Y;
@@ -57,11 +56,11 @@ public partial class Main : Node
 		Vector2 oppositePosition = new (viewportWidth - 300, GD.Randf() * viewportHeight - 300);
 		Vector2 startingPosition = new (200, GD.Randf() * viewportHeight - 300);
 
-        if(mob.GlobalPosition.X < 0){
-    		ResetMobPosition(mob, oppositePosition);
-        } else if(mob.GlobalPosition.X > viewportWidth ){
-    		ResetMobPosition(mob, startingPosition);
-    	}
+		if(mob.GlobalPosition.X < 0){
+			ResetMobPosition(mob, oppositePosition);
+		} else if(mob.GlobalPosition.X > viewportWidth ){
+			ResetMobPosition(mob, startingPosition);
+		}
 	}
 
 	public void ResetMobPosition(Mobs mob, Vector2 newPosition ){

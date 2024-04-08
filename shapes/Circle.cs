@@ -12,15 +12,7 @@ public partial class Circle : Node2D
 		GD.Print(collisionShape.Shape.GetRect());
 		var position = new Vector2(0,0);
 		var collisionRect = collisionShape.Shape.GetRect();
-		DrawCircle(position,28,new Color("#0091AD"));
-	}
-    public override void _Ready()
-	{
-
-	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
+		GD.Print(collisionRect);
+		DrawCircle(position,collisionRect.Size.X,new Color("#0091AD"));
 	}
 }

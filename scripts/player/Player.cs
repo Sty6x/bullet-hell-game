@@ -15,24 +15,24 @@ public partial class Player : RigidBody2D
 		Vector2 force = new(x,y);
 		return force;
 	}
-    private void HandleInputs()
-    {
-    	if(Input.IsActionPressed("left")){
+	private void HandleInputs()
+	{
+		if(Input.IsActionPressed("left")){
 			ApplyForce(CalculateNewForce(-Mass * _accelerationX,0));
-    	}
+		}
 
-    	if(Input.IsActionPressed("right")){
+		if(Input.IsActionPressed("right")){
 			ApplyForce(CalculateNewForce(Mass * _accelerationX,0));
-    	}
-    }
+		}
+	}
 
-    public override void _Process(double delta)
+	public override void _Process(double delta)
 	{
 		HandleInputs();
 	}
-    public override void _IntegrateForces(PhysicsDirectBodyState2D state)
-    {
-    	if(Input.IsActionJustPressed("jump")){
+	public override void _IntegrateForces(PhysicsDirectBodyState2D state)
+	{
+		if(Input.IsActionJustPressed("jump")){
 			var startingVelocity = state.LinearVelocity.Y;
 			Vector2 force = new( 0,-Mass * _jumpAcceleration); // to initiate jump
 			float endVelocity = startingVelocity + _jumpAcceleration * (float)GetProcessDeltaTime();
@@ -44,7 +44,7 @@ public partial class Player : RigidBody2D
 			var deceleration = (endVelocity - startingVelocity) / (float)GetProcessDeltaTime() ;
 			Vector2 newCalculatedForce = new(0, Mass * -deceleration);
 			ApplyForce(newCalculatedForce);
-    	}
-    }
+		}
+	}
 
 }
