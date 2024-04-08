@@ -13,6 +13,6 @@ public partial class Circle : Node2D
 		var position = new Vector2(0,0);
 		var collisionRect = collisionShape.Shape.GetRect();
 		GD.Print(collisionRect);
-		DrawCircle(position,collisionRect.Size.X,new Color("#0091AD"));
+		DrawCircle(position,Mathf.Sqrt(collisionRect.Area/Mathf.Pi),new Color("#0091AD"));
 	}
 }
