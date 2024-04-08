@@ -13,7 +13,8 @@ public partial class Player : RigidBody2D
 
     public override void _Ready()
     {
-		outOfBoundsParticles = new();
+		outOfBoundsParticles = GetNode<OutOfBoundsParticles>("OutOfBoundsParticles");
+		GD.Print(outOfBoundsParticles);
     }
 
     private static Vector2 CalculateNewForce(float x, float y ){
@@ -56,17 +57,14 @@ public partial class Player : RigidBody2D
 	private void CheckPlayerOutOfBounds(){
 		float viewportWidth = GetViewport().GetVisibleRect().Size.X;
 		float viewportHeight = GetViewport().GetVisibleRect().Size.Y;
+		outOfBoundsParticles.ApplyParticles(this);
         if(GlobalPosition.X < 0){
-			outOfBoundsParticles.ApplyParticles(this);
 			GD.Print("left");
         } else if(GlobalPosition.X > viewportWidth ){
-			outOfBoundsParticles.ApplyParticles(this);
 			GD.Print("right");
         } else if(GlobalPosition.Y < 0 ){
-			outOfBoundsParticles.ApplyParticles(this);
 			GD.Print("top");
     	} else if(GlobalPosition.Y > viewportHeight ){
-			outOfBoundsParticles.ApplyParticles(this);
 			GD.Print("bottom");
     	}
 	}
