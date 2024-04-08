@@ -1,3 +1,4 @@
+using System.Xml;
 using Godot;
 
 public partial class Player : RigidBody2D 
@@ -7,8 +8,15 @@ public partial class Player : RigidBody2D
 	private float _accelerationX = 1000.0f;
 	private float  _jumpAcceleration = 20000.0f;
 	public bool isOutOfBounds = false;
+	private OutOfBoundsParticles outOfBoundsParticles;
 
-	private static Vector2 CalculateNewForce(float x, float y ){
+
+    public override void _Ready()
+    {
+		outOfBoundsParticles = new();
+    }
+
+    private static Vector2 CalculateNewForce(float x, float y ){
 		Vector2 force = new(x,y);
 		return force;
 	}
@@ -42,6 +50,24 @@ public partial class Player : RigidBody2D
     public override void _Process(double delta)
 	{
 		HandleInputs();
+		CheckPlayerOutOfBounds();
 	}
-	// to handle what happens if out of bounds
+
+	private void CheckPlayerOutOfBounds(){
+		float viewportWidth = GetViewport().GetVisibleRect().Size.X;
+		float viewportHeight = GetViewport().GetVisibleRect().Size.Y;
+        if(GlobalPosition.X < 0){
+			outOfBoundsParticles.ApplyParticles(this);
+			GD.Print("left");
+        } else if(GlobalPosition.X > viewportWidth ){
+			outOfBoundsParticles.ApplyParticles(this);
+			GD.Print("right");
+        } else if(GlobalPosition.Y < 0 ){
+			outOfBoundsParticles.ApplyParticles(this);
+			GD.Print("top");
+    	} else if(GlobalPosition.Y > viewportHeight ){
+			outOfBoundsParticles.ApplyParticles(this);
+			GD.Print("bottom");
+    	}
+	}
 }

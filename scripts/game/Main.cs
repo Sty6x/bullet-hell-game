@@ -75,21 +75,9 @@ public partial class Main : Node
 	public override void _Process(double delta)
 	{
 		MoveMobs();
-		CheckPlayerOutOfBounds();
+		// CheckPlayerOutOfBounds();
 	}
 
-	private void CheckPlayerOutOfBounds(){
-		float viewportWidth = GetViewport().GetVisibleRect().Size.X;
-		float viewportHeight = GetViewport().GetVisibleRect().Size.Y;
-        if(player.GlobalPosition.X < 0){
-			GD.Print("left");
-        } else if(player.GlobalPosition.X > viewportWidth ){
-			GD.Print("right");
-        } else if(player.GlobalPosition.Y < 0 ){
-			GD.Print("top");
-    	} else if(player.GlobalPosition.Y > viewportHeight ){
-			GD.Print("bottom");
-    	}
-	}
+	
 
 }

@@ -22,7 +22,6 @@ material = SubResource("CanvasItemMaterial_pm102")
 position = Vector2(259, 219)
 collision_mask = 2
 gravity_scale = 2.0
-freeze = true
 script = ExtResource("1_fdx3a")
 
 [node name="Circle" type="Node2D" parent="."]
@@ -46,4 +45,3 @@ scale_amount_curve = SubResource("Curve_1vr7t")
 color = Color(0, 0.568627, 0.678431, 1)
 color_ramp = SubResource("Gradient_juxnf")
 script = ExtResource("3_gret3")
-metadata/_edit_lock_ = true

@@ -4,14 +4,9 @@ using System;
 public partial class OutOfBoundsParticles : CpuParticles2D
 {
 	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-		Direction = new Vector2(-1,0);
+	public bool isOutOfBounds = false;
 
-	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
+	public void ApplyParticles(Player player){
+		GD.Print("Particles added");
 	}
 }
